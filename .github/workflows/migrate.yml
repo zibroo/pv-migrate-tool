@@ -42,6 +42,7 @@ jobs:
           aws eks --region us-east-1 update-kubeconfig --name prod-eks-cluster
       - name: PV migrate  Setup
         run: |
-            sudo apt-get install build-essential procps curl file git
-            brew tap utkuozdemir/pv-migrate
-            brew install pv-migrate 
+            wget https://github.com/utkuozdemir/pv-migrate/releases/download/v1.7.1/pv-migrate_v1.7.1_darwin_x86_64.tar.gz
+            tar -xvzf pv-migrate_v1.7.1_darwin_x86_64.tar.gz
+            mv pv-migrate /usr/local/bin
+            pv-migrate --help
