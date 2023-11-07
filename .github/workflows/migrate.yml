@@ -39,7 +39,7 @@ jobs:
 
       - name : Connection to Kubernetes Cluster
         run: |
-          aws eks --region us-west-2 update-kubeconfig --name prod-eks-cluster
+          aws eks --region us-east-1 update-kubeconfig --name prod-eks-cluster
       - name: PV migrate  Setup
         run: |
             apt-get install build-essential procps curl file git
