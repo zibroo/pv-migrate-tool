@@ -14,11 +14,16 @@ on:
         - load
         - staging
       source-namespace:
-        description: 'Environment to run tests against'
-        type: environment
+        description: 'Source namespace'
         required: true
       dest-namespace:
-        description: 'Enviasdfdsf'
+        description: 'Destination namespace'
+        required: true
+      dest-pvc:
+        description: 'Source pvc name'
+        required: true
+      dest-pvc:
+        description: 'Destination pvc name'
         required: true
 
 permissions:
@@ -56,4 +61,5 @@ jobs:
 
       - name: PV migration
         run: |
+           kubectl apply -f serviceaccount.yaml -n  ${{ github.event.inputs.source-namespace }}
            pv-migrate migrate -i --source-namespace ${{ github.event.inputs.source-namespace }} --dest-namespace ${{ github.event.inputs.dest-namespace }} ${{ github.event.inputs.source-pvc }} ${{ github.event.inputs.dest-pvc }}
