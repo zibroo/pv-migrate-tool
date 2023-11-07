@@ -1,4 +1,4 @@
-name: Popeye Workflow
+name: Pv Migrate Workflow
 
 on:
   workflow_dispatch:
@@ -31,7 +31,7 @@ permissions:
   contents: read
 
 jobs:
-  terragrunt:
+  data-migration:
     runs-on: ubuntu-latest #runner
     defaults:
       run:
