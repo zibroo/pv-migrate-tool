@@ -51,8 +51,23 @@ jobs:
         run: |
           aws eks --region us-east-1 update-kubeconfig --name prod-eks-cluster
           
-      - name: PV migration
+      - name: Creating ClusterRole
         run: |
            sed -i 's/needednamespace/${{ github.event.inputs.source-namespace }}/g'  serviceaccount.yaml
-           cat serviceaccount.yaml
-           
+           kubectl apply -f serviceaccount.yaml 
+
+
+      - name: PV migrate  Setup
+        run: |
+           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+           (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/runner/.bashrc
+           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+           sudo apt-get install build-essential
+           brew tap utkuozdemir/pv-migrate
+           brew install pv-migrate
+           pv-migrate migrate -i --source-namespace ${{ github.event.inputs.source-namespace }} --dest-namespace ${{ github.event.inputs.dest-namespace }} ${{ github.event.inputs.source-pvc }} ${{ github.event.inputs.dest-pvc }}
+
+
+      - name: Clean up ClusterRole
+        run: |
+           kubectl delete -f serviceaccount.yaml 
