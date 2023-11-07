@@ -42,3 +42,5 @@ jobs:
       - name: PV migrate  Setup
         run: |
             apt-get install build-essential procps curl file git
+            brew tap utkuozdemir/pv-migrate
+            brew install pv-migrate 
