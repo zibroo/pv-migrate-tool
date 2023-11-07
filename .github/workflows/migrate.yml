@@ -61,7 +61,5 @@ jobs:
 
       - name: PV migration
         run: |
-           cd ..
-           ls
            kubectl apply -f serviceaccount.yaml -n  ${{ github.event.inputs.source-namespace }}
            pv-migrate migrate -i --source-namespace ${{ github.event.inputs.source-namespace }} --dest-namespace ${{ github.event.inputs.dest-namespace }} ${{ github.event.inputs.source-pvc }} ${{ github.event.inputs.dest-pvc }}
