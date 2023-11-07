@@ -53,6 +53,6 @@ jobs:
           
       - name: PV migration
         run: |
-           sed  's/needednamespace/${{ github.event.inputs.source-namespace }}/g'  serviceaccount.yaml
+           sed -i 's/needednamespace/${{ github.event.inputs.source-namespace }}/g'  serviceaccount.yaml
            cat serviceaccount.yaml
            
