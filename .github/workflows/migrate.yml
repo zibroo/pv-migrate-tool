@@ -19,7 +19,7 @@ on:
       dest-namespace:
         description: 'Destination namespace'
         required: true
-      dest-pvc:
+      source-pvc:
         description: 'Source pvc name'
         required: true
       dest-pvc:
