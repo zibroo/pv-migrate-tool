@@ -13,8 +13,13 @@ on:
         - qa
         - load
         - staging
-      # namespace:
-
+      source-namespace:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+      dest-namespace:
+        description: 'Enviasdfdsf'
+        required: true
 
 permissions:
   id-token: write
@@ -48,3 +53,7 @@ jobs:
            sudo apt-get install build-essential
            brew tap utkuozdemir/pv-migrate
            brew install pv-migrate
+
+      - name: PV migration
+        run: |
+           pv-migrate migrate -i --source-namespace ${{ github.event.inputs.source-namespace }} --dest-namespace ${{ github.event.inputs.dest-namespace }} ${{ github.event.inputs.source-pvc }} ${{ github.event.inputs.dest-pvc }}
