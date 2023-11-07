@@ -50,17 +50,9 @@ jobs:
       - name : Connection to Kubernetes Cluster
         run: |
           aws eks --region us-east-1 update-kubeconfig --name prod-eks-cluster
-      - name: PV migrate  Setup
-        run: |
-           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-           (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/runner/.bashrc
-           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-           sudo apt-get install build-essential
-           brew tap utkuozdemir/pv-migrate
-           brew install pv-migrate
-           pv-migrate --help
-
+          
       - name: PV migration
         run: |
-           kubectl apply -f serviceaccount.yaml -n  ${{ github.event.inputs.source-namespace }}
-           pv-migrate migrate -i --source-namespace ${{ github.event.inputs.source-namespace }} --dest-namespace ${{ github.event.inputs.dest-namespace }} ${{ github.event.inputs.source-pvc }} ${{ github.event.inputs.dest-pvc }}
+           sed -i 's/\needednamespace/${{ github.event.inputs.source-namespace }}/g'  serviceaccount.yaml
+           cat serviceaccount.yaml
+           
